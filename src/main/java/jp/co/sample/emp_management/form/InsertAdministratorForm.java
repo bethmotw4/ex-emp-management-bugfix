@@ -1,5 +1,6 @@
 package jp.co.sample.emp_management.form;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
@@ -16,6 +17,7 @@ public class InsertAdministratorForm {
 	private String name;
 	/** メールアドレス */
 	@NotBlank(message = "メールアドレスを入力してください")
+	@Email(message = "メールアドレスの形式が不正です")
 	private String mailAddress;
 	/** パスワード */
 	@NotBlank(message = "パスワードを入力してください")
