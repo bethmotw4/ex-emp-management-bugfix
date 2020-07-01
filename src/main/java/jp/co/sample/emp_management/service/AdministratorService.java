@@ -46,7 +46,7 @@ public class AdministratorService {
 	 * @param mailAddress メールアドレス
 	 * @return 管理者情報
 	 */
-	public Administrator findByMaikAddress(String mailAddress) {
+	public Administrator findByMailAddress(String mailAddress) {
 		return administratorRepository.findByMailAddress(mailAddress);
 	}
 }

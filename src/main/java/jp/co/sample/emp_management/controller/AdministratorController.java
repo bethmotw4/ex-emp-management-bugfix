@@ -1,6 +1,7 @@
 package jp.co.sample.emp_management.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -10,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.sample.emp_management.domain.Administrator;
+import jp.co.sample.emp_management.domain.Employee;
 import jp.co.sample.emp_management.form.InsertAdministratorForm;
 import jp.co.sample.emp_management.form.LoginForm;
 import jp.co.sample.emp_management.service.AdministratorService;
@@ -75,10 +78,16 @@ public class AdministratorController {
 	 */
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
+		Administrator administrator = administratorService.findByMailAddress(form.getMailAddress());
+		System.out.println(administrator);
+		if (administrator != null) {
+			FieldError fieldError = new FieldError(result.getObjectName(), "mailAddress", "このメールアドレスは既に使用されています");
+			result.addError(fieldError);
+		}
 		if (result.hasErrors()) {
 			return toInsert();
 		}
-		Administrator administrator = new Administrator();
+		administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 		administratorService.insert(administrator);
