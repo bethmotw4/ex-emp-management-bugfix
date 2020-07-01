@@ -78,10 +78,6 @@ public class AdministratorController {
 		if (result.hasErrors()) {
 			return toInsert();
 		}
-//		メール重複してたらどうやってメッセージだそうか？
-//		if (administratorService.findByMaikAddress(form.getMailAddress()) != null) {
-//			model
-//		}
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
@@ -135,21 +131,4 @@ public class AdministratorController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	
-	@ResponseBody
-	@RequestMapping(value = "/confirmationPasswaordCheck")
-	public Map<String, String> check(String password, String confirmationPassword) {
-		Map<String, String> map = new HashMap<>();
-		String confirmation_error = null;
-		if (password.equals(confirmationPassword)) {
-			confirmation_error = "";
-			map.put("check", "true");
-		} else {
-			confirmation_error = "パスワードが不一致です";			
-			map.put("check", "false");
-		}
-		map.put("confirmation_error", confirmation_error);
-		return map;
-	}
-	
 }
