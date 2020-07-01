@@ -59,6 +59,7 @@
 										<label th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}" class="error-messages">
 											メールアドレスを入力してください
 										</label>
+										
 										<input type="text" name="mailAddress" id="mailAddress" class="form-control" placeholder="yamada@mail.com"
 											 th:field="*{mailAddress}" th:errorclass="error-input" value="yamada@mail.com">
 									</div>
@@ -74,16 +75,38 @@
 										<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-messages">
 											パスワードを入力してください
 										</label>
+										
 										<input type="password" name="password" id="password" class="form-control" placeholder="password"
 											 th:field="*{password}" th:errorclass="error-input" value="xxxxxxxx">
 									</div>
 								</div>
 							</div>
+<!-- 							///////////////////////////// -->
+							<!-- 確認用パスワード -->
+							<div class="form-group">
+								<div class="row">
+									<div class="col-sm-12">
+										<label for="confirmationPasswaord">
+											確認用パスワード:
+										</label>
+<!-- 										<label th:if="${#fields.hasErrors('confirmationPasswaord')}" th:errors="*{confirmationPasswaord}" class="error-messages"> -->
+<!-- 											確認用パスワードを入力してください -->
+<!-- 										</label> -->
+										<label th:if="${#fields.hasErrors('confirmationPasswaordValid')}" th:errors="*{confirmationPasswaordValid}" class="error-messages">
+											確認用パスワードを入力してください
+										</label>
+<!-- 										<span id="confirmation_error"></span>										 -->
+										<input type="password" name="confirmationPasswaord" id="confirmationPasswaord" class="form-control" placeholder="password"
+											 th:field="*{confirmationPasswaord}" th:errorclass="error-input" value="xxxxxxxx">
+									</div>
+								</div>
+							</div>
+<!-- 							///////////////////////////////// -->
 							<!-- 登録ボタン -->
 							<div class="form-group">
 								<div class="row">
 									<div class="col-sm-12">
-										<button type="submit" class="btn btn-primary">登録</button>
+										<button type="submit" class="btn btn-primary" id="insert_button">登録</button>
 									</div>
 								</div>
 							</div>
@@ -101,5 +124,7 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../../static/js/bootstrap.min.js"></script>
+<!-- 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+<!-- 	<script th:src=@{/js/insertAdministrator.js}></script> -->
 </body>
 </html>

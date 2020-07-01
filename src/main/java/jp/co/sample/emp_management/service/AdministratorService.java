@@ -39,4 +39,14 @@ public class AdministratorService {
 		Administrator administrator = administratorRepository.findByMailAddressAndPassward(mailAddress, passward);
 		return administrator;
 	}
+	
+	/**
+	 * メールアドレスから管理者情報を取得する.
+	 * 
+	 * @param mailAddress メールアドレス
+	 * @return 管理者情報
+	 */
+	public Administrator findByMaikAddress(String mailAddress) {
+		return administratorRepository.findByMailAddress(mailAddress);
+	}
 }

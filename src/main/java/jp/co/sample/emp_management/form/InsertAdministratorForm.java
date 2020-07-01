@@ -1,9 +1,11 @@
 package jp.co.sample.emp_management.form;
 
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.util.StringUtils;
 
 /**
  * 管理者情報登録時に使用するフォーム.
@@ -23,6 +25,20 @@ public class InsertAdministratorForm {
 	@NotBlank(message = "パスワードを入力してください")
 	@Length(min = 5, message = "5文字以上入力してください")
 	private String password;
+	/** 確認用パスワード */
+//	@NotBlank(message = "確認用パスワードを入力してください")
+	private String confirmationPasswaord;
+	@AssertTrue(message = "パスワードが不一致です")
+	public boolean isconfirmationPasswaordValid() {
+		if (StringUtils.isEmpty(password)) {
+			return true;
+		}
+		if (!password.equals(confirmationPasswaord)) {
+			return false;
+		}
+		return true;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -41,10 +57,17 @@ public class InsertAdministratorForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getConfirmationPasswaord() {
+		return confirmationPasswaord;
+	}
+	public void setConfirmationPasswaord(String confirmationPasswaord) {
+		this.confirmationPasswaord = confirmationPasswaord;
+	}
 	@Override
 	public String toString() {
 		return "InsertAdministratorForm [name=" + name + ", mailAddress=" + mailAddress + ", password=" + password
-				+ "]";
+				+ ", confirmationPasswaord=" + confirmationPasswaord + "]";
 	}
+	
 	
 }

@@ -1,5 +1,8 @@
 package jp.co.sample.emp_management.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
@@ -10,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.sample.emp_management.domain.Administrator;
 import jp.co.sample.emp_management.form.InsertAdministratorForm;
@@ -74,6 +78,10 @@ public class AdministratorController {
 		if (result.hasErrors()) {
 			return toInsert();
 		}
+//		メール重複してたらどうやってメッセージだそうか？
+//		if (administratorService.findByMaikAddress(form.getMailAddress()) != null) {
+//			model
+//		}
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
@@ -126,6 +134,22 @@ public class AdministratorController {
 	public String logout() {
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/confirmationPasswaordCheck")
+	public Map<String, String> check(String password, String confirmationPassword) {
+		Map<String, String> map = new HashMap<>();
+		String confirmation_error = null;
+		if (password.equals(confirmationPassword)) {
+			confirmation_error = "";
+			map.put("check", "true");
+		} else {
+			confirmation_error = "パスワードが不一致です";			
+			map.put("check", "false");
+		}
+		map.put("confirmation_error", confirmation_error);
+		return map;
 	}
 	
 }
