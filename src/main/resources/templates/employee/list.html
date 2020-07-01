@@ -63,7 +63,11 @@
 <!-- ここから上を編集する必要はありません -->
 
 <!-- ここにモックのtable要素を貼り付けます -->
-
+				<form action="list.html" th:action="@{/employee/search}" method="post">
+					<label for="searchEmployeeName" th:for="searchEmployeeName">従業員検索</label>
+					<input type="text" id="searchEmployeeName" th:id="searchEmployeeName" name="searchEmployeeName" placeholder="山田太郎">
+					<button>検索</button>
+				</form>
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -73,6 +77,11 @@
 						</tr>
 					</thead>
 					<tbody>
+						<tr th:unless="${searchResult}">
+							<td colspan="3">
+								1件もありませんでした。
+							</td>
+						</tr>
 						<tr th:each="employee : ${employeeList}">
 							<td>
 								<a href="detail.html" th:href="@{'/employee/showDetail?id=' + ${employee.id}}">

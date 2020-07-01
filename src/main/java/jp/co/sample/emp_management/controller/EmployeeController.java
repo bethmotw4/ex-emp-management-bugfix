@@ -95,6 +95,26 @@ public class EmployeeController {
 	
 	
 	/**
+	 * 名前で従業員検索をする.
+	 * 
+	 * @param searchEmployeeName 従業員名
+	 * @param model リクエストスコープ
+	 * @return 従業員情報
+	 */
+	@RequestMapping("/search")
+	public String searchEmployee(String searchEmployeeName, Model model) {
+		List<Employee> employeeList = employeeService.searchEmployee(searchEmployeeName);
+		if (employeeList.size() == 0) {
+			model.addAttribute("searchResult", false);
+			employeeList = employeeService.showList();
+		} else {
+			model.addAttribute("searchResult", true);			
+		}
+		model.addAttribute("employeeList", employeeList);			
+		return "employee/list";
+	}
+	
+	/**
 	 * 500エラーの確認画面
 	 * 
 	 * @return 意味のない文字列

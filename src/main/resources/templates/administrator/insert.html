@@ -89,13 +89,9 @@
 										<label for="confirmationPasswaord">
 											確認用パスワード:
 										</label>
-<!-- 										<label th:if="${#fields.hasErrors('confirmationPasswaord')}" th:errors="*{confirmationPasswaord}" class="error-messages"> -->
-<!-- 											確認用パスワードを入力してください -->
-<!-- 										</label> -->
 										<label th:if="${#fields.hasErrors('confirmationPasswaordValid')}" th:errors="*{confirmationPasswaordValid}" class="error-messages">
 											確認用パスワードを入力してください
 										</label>
-<!-- 										<span id="confirmation_error"></span>										 -->
 										<input type="password" name="confirmationPasswaord" id="confirmationPasswaord" class="form-control" placeholder="password"
 											 th:field="*{confirmationPasswaord}" th:errorclass="error-input" value="xxxxxxxx">
 									</div>
