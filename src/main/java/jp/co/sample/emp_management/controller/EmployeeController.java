@@ -92,4 +92,16 @@ public class EmployeeController {
 		employeeService.update(employee);
 		return "redirect:/employee/showList";
 	}
+	
+	
+	/**
+	 * 500エラーの確認画面
+	 * 
+	 * @return 意味のない文字列
+	 */
+	@RequestMapping("/error")
+	public String exception() {
+		System.out.println(10/ 0);
+		return "aa";
+	}
 }
