@@ -79,7 +79,6 @@ public class AdministratorController {
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 		Administrator administrator = administratorService.findByMailAddress(form.getMailAddress());
-		System.out.println(administrator);
 		if (administrator != null) {
 			FieldError fieldError = new FieldError(result.getObjectName(), "mailAddress", "このメールアドレスは既に使用されています");
 			result.addError(fieldError);

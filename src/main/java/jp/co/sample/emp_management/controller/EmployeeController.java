@@ -1,5 +1,6 @@
 package jp.co.sample.emp_management.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +10,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.sample.emp_management.domain.Employee;
 import jp.co.sample.emp_management.form.UpdateEmployeeForm;
 import jp.co.sample.emp_management.service.EmployeeService;
+import net.arnx.jsonic.JSON;
 
 /**
  * 従業員情報を操作するコントローラー.
@@ -105,14 +108,27 @@ public class EmployeeController {
 	public String searchEmployee(String searchEmployeeName, Model model) {
 		List<Employee> employeeList = employeeService.searchEmployee(searchEmployeeName);
 		if (employeeList.size() == 0) {
-			model.addAttribute("searchResult", false);
+			model.addAttribute("searchResult", "1件もありませんでした。");
 			employeeList = employeeService.showList();
-		} else {
-			model.addAttribute("searchResult", true);			
 		}
 		model.addAttribute("employeeList", employeeList);			
 		return "employee/list";
 	}
+	
+	/**
+	 * 全従業員の名前をオートコンプリートに渡す.
+	 * 
+	 * @return 全従業員名
+	 */
+	@ResponseBody
+	@RequestMapping("/getAutoComplete")
+	public String getAutoComplete() {
+		List<Employee> employeeList = employeeService.showList();
+		List<String> nameList = new ArrayList<>();
+		employeeList.forEach(employee -> nameList.add(employee.getName()));
+		return JSON.encode(nameList);
+	}
+	
 	
 	/**
 	 * 500エラーの確認画面

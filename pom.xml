@@ -61,6 +61,14 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.arnx/jsonic -->
+		<!-- JSONエンコードに使用 -->
+		<dependency>
+		    <groupId>net.arnx</groupId>
+		    <artifactId>jsonic</artifactId>
+		    <version>1.3.10</version>
+		</dependency>
+				
 	</dependencies>
 
 	<build>
