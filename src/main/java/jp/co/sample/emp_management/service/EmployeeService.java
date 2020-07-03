@@ -66,4 +66,13 @@ public class EmployeeService {
 		List<Employee> employeeList = employeeRepository.findByLikeName(name);
 		return employeeList;
 	}
+	
+	/**
+	 * 従業員情報を登録する.
+	 * 
+	 * @param employee 従業員情報
+	 */
+	public void insert(Employee employee) {
+		employeeRepository.insert(employee);
+	}
 }

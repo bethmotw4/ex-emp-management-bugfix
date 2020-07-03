@@ -3,6 +3,7 @@ package jp.co.sample.emp_management.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import jp.co.sample.emp_management.domain.Employee;
+import jp.co.sample.emp_management.form.InsertEmployeeForm;
 import jp.co.sample.emp_management.form.UpdateEmployeeForm;
 import jp.co.sample.emp_management.service.EmployeeService;
 import net.arnx.jsonic.JSON;
@@ -39,6 +41,16 @@ public class EmployeeController {
 	public UpdateEmployeeForm setUpForm() {
 		return new UpdateEmployeeForm();
 	}
+	
+	/**
+	 * 従業員登録に使用するフォームをインスタンス化する.
+	 * 
+	 * @return フォーム
+	 */
+	@ModelAttribute
+	public InsertEmployeeForm setUpInsertEmployeeForm() {
+		return new InsertEmployeeForm();
+	}
 
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員一覧を表示する
@@ -55,6 +67,10 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 	}
+	
+//	private void convertBase64Image() {
+//		List<Employee> employeeList = employeeService.
+//	}
 
 	
 	/////////////////////////////////////////////////////
@@ -127,6 +143,35 @@ public class EmployeeController {
 		List<String> nameList = new ArrayList<>();
 		employeeList.forEach(employee -> nameList.add(employee.getName()));
 		return JSON.encode(nameList);
+	}
+	
+	/**
+	 * 従業員登録画面を表示する.
+	 * 
+	 * @return 従業員登録画面
+	 */
+	@RequestMapping("/insertShow")
+	public String insertShow() {
+		return "employee/insert";
+	}
+	
+	
+	/**
+	 * 従業員を登録する.
+	 * 
+	 * @param form フォーム
+	 * @param result 結果
+	 * @return 成功:従業員一覧画面, 失敗:従業員登録画面
+	 */
+	@RequestMapping("/insert")
+	public String insert(@Validated InsertEmployeeForm form, BindingResult result) {
+		if (result.hasErrors()) {
+			return insertShow();
+		}
+		Employee employee = new Employee();
+		BeanUtils.copyProperties(form, employee);
+		employeeService.insert(employee);
+		return "redirect:/employee/showList";
 	}
 	
 	
