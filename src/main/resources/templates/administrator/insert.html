@@ -75,9 +75,12 @@
 										<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-messages">
 											パスワードを入力してください
 										</label>
-										
 										<input type="password" name="password" id="password" class="form-control" placeholder="password"
 											 th:field="*{password}" th:errorclass="error-input" value="xxxxxxxx">
+										<span>
+											<input type="checkbox" id="passwordCheck">
+											<label for="passwordCheck">パスワードを表示する</label>
+										</span>
 									</div>
 								</div>
 							</div>
@@ -94,6 +97,10 @@
 										</label>
 										<input type="password" name="confirmationPasswaord" id="confirmationPasswaord" class="form-control" placeholder="password"
 											 th:field="*{confirmationPasswaord}" th:errorclass="error-input" value="xxxxxxxx">
+										<span>
+											<input type="checkbox" id="passwordCheck2">
+											<label for="passwordCheck2">確認用パスワードを表示する</label>
+										</span>
 									</div>
 								</div>
 							</div>
@@ -120,5 +127,6 @@
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../../static/js/bootstrap.min.js"></script>
+	<script th:src="@{/js/passwordCheck.js}"></script>
 </body>
 </html>
